@@ -44,6 +44,8 @@ async def sync_user(user_id: int):
 
     if len(bought) == 0 and len(sold) == 0:
         return
+    
+    print(f"{user_id} updated, syncing...")
 
     item_ids = list(set([transaction.item_id for transaction in bought + sold]))
     items = [] if len(item_ids) == 0 else await get_items(item_ids)
@@ -65,6 +67,7 @@ async def sync_user(user_id: int):
 async def sync_users_task():
     ids = await get_user_ids()
     if len(ids) > 0:
+        print("syncing users")
         await broker.publish_batch(*ids, list="user_sync")
 
 

@@ -1,6 +1,17 @@
 from shared import ItemUpdate
 
 
+def escape_markdown(text: str):
+    special_chars = "_*[]()~`>#+-=|{}.! "
+    escaped = ""
+    for ch in text:
+        if ch in special_chars:
+            escaped += "\\" + ch
+        else:
+            escaped += ch
+    return escaped
+
+
 def truncate(line: str, width: int):
     if len(line) <= width:
         return line
@@ -47,4 +58,4 @@ def format_updates(updates: list[ItemUpdate]):
     for transaction in updates:
         msg += format_update(transaction) + "\n"
 
-    return msg
+    return escape_markdown(msg)

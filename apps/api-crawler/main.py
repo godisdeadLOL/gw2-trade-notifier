@@ -61,10 +61,11 @@ async def sync_user(user_id: int):
 #     await asyncio.gather(*[sync_user(str(user_id)) for user_id in user_ids])
 
 
-@scheduler.scheduled_job("interval", seconds=10)
+@scheduler.scheduled_job("interval", seconds=30)
 async def sync_users_task():
     ids = await get_user_ids()
-    await broker.publish_batch(*ids, list="user_sync")
+    if len(ids) > 0:
+        await broker.publish_batch(*ids, list="user_sync")
 
 
 @app.on_startup

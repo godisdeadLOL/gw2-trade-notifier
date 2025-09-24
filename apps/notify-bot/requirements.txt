@@ -1,0 +1,4 @@
+faststream[redis]
+aiogram
+dotenv
+-e file:../../packages/shared

@@ -1,0 +1,6 @@
+db
+.env
+test.py
+demo.py
+.venv
+**/__pycache__

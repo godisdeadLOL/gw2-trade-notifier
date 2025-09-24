@@ -1,0 +1,7 @@
+faststream[redis]
+faststream[cli]
+pymongo
+dotenv
+APScheduler
+-e file:../../packages/shared
+-e file:../../packages/gw2-api

@@ -55,15 +55,9 @@ async def sync_user(user_id: int):
 
     payload = UserSyncedPayload(user_id=str(user_id), bought=updates_bought, sold=updates_sold)
     await broker.publish(payload, list="user_synced")
+    
 
-
-# @broker.subscriber(list=ListSub("user_sync", batch=True))
-# async def handle_users_sync(user_ids: list):
-#     #! почему-то user_ids конвертируется в list[int]
-#     await asyncio.gather(*[sync_user(str(user_id)) for user_id in user_ids])
-
-
-@scheduler.scheduled_job("interval", seconds=30)
+@scheduler.scheduled_job("interval", seconds=config.sync_interval)
 async def sync_users_task():
     ids = await get_user_ids()
     if len(ids) > 0:

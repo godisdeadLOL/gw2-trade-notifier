@@ -46,7 +46,7 @@ def format_price(price: int):
 
 
 def format_update(update: ItemUpdate):
-    name = truncate(update.name, 20)
+    name = update.name
     price = format_price(update.price)
 
     return f"{price} — x{update.count} {name}"

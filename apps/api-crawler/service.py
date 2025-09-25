@@ -29,11 +29,11 @@ async def fetch_transactions(token: str):
 async def init_user(user_id: str, token: str):
     info = await get_token_info(token)
     if not info:
-        raise Exception("wrong token")
+        raise Exception("wrong_token")
 
     verified = "account" in info.permissions and "tradingpost" in info.permissions
     if not verified:
-        raise Exception("wrong permissions")
+        raise Exception("wrong_permissions")
 
     (_, _, transaction_ids) = await fetch_transactions(token)
 
@@ -55,7 +55,7 @@ async def sync_and_get_new_transactions(user_id: str):
 
     user_raw = await collection.find_one({"id": user_id})
     if not user_raw:
-        raise Exception("user not found")
+        raise Exception("user_not_found")
     user = User.model_validate(user_raw)
 
     (bought, sold, transaction_ids) = await fetch_transactions(user.token)

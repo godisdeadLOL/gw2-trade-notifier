@@ -21,10 +21,12 @@ T = TypeVar("T")
 
 
 def async_batch_handler(func: Callable[[T], Awaitable]) -> Callable[[list[T]], Awaitable]:
+    type = next(iter(func.__annotations__.values()))
+    
     async def wrapper(values: list):
         await asyncio.gather(*[func(value) for value in values])
 
-    wrapper.__annotations__["values"] = list[T]
+    wrapper.__annotations__["values"] = list[type]
 
     return wrapper
 
